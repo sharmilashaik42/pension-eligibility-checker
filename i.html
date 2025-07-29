@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pension Eligibility Checker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #c3ecb2, #7ed6df);
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .box {
+      background: #fff;
+      padding: 40px 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      max-width: 450px;
+      width: 100%;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: 500;
+      color: #555;
+      text-align: left;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: 0.2s ease;
+    }
+
+    input:focus, select:focus {
+      border-color: #00b894;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #00b894;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      margin-top: 15px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #019874;
+    }
+
+    #result {
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: bold;
+      display: none;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .success {
+      background-color: #dff9fb;
+      color: #2d3436;
+      border: 1px solid #55efc4;
+    }
+
+    .error {
+      background-color: #fab1a0;
+      color: #d63031;
+      border: 1px solid #e17055;
+    }
+
+    @media (max-width: 500px) {
+      .box {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box">
+    <h2>Pension Eligibility Form</h2>
+    <form id="pensionForm">
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" required placeholder="e.g., Ramesh Kumar">
+
+      <label for="age">Age:</label>
+      <input type="number" id="age" required placeholder="e.g., 35">
+
+      <label for="gender">Gender:</label>
+      <select id="gender" required>
+        <option value="" disabled selected>Select your gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <label for="aadhaar">Aadhaar Number:</label>
+      <input type="text" id="aadhaar" required maxlength="12" placeholder="12-digit Aadhaar number">
+
+      <label for="status">Employment Status:</label>
+      <select id="status" required>
+        <option value="" disabled selected>Select status</option>
+        <option value="Employed">Employed</option>
+        <option value="Unemployed">Unemployed</option>
+        <option value="Retired">Retired</option>
+      </select>
+
+      <button type="button" onclick="checkPension()">Check Eligibility</button>
+    </form>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function checkPension() {
+      const age = parseInt(document.getElementById("age").value);
+      const resultDiv = document.getElementById("result");
+      let message = "";
+      let className = "";
+
+      if (isNaN(age)) {
+        message = "Please enter a valid age.";
+        className = "error";
+      } else if (age < 18) {
+        message = "No pension";
+        className = "error";
+      } else if (age > 20 && age <= 30) {
+        message = "Eligible for ₹5000 pension";
+        className = "success";
+      } else if (age > 30 && age <= 40) {
+        message = "Eligible for ₹6000 pension";
+        className = "success";
+      } else if (age > 40 && age < 50) {
+        message = "Eligible for ₹7000 pension";
+        className = "success";
+      } else if (age > 50 && age < 60) {
+        message = "Eligible for ₹8000 pension";
+        className = "success";
+      } else if (age >= 60) {
+        message = "Eligible for ₹10000 pension";
+        className = "success";
+      } else {
+        message = "Not eligible for pension in current category.";
+        className = "error";
+      }
+
+      resultDiv.textContent = message;
+      resultDiv.className = className;
+      resultDiv.style.display = "block";
+    }
+  </script>
+
+</body>
+</html>
